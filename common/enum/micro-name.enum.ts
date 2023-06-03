@@ -1,0 +1,5 @@
+export enum MicroName {
+  BFF = 'BFF',
+  AUTHORIZATION = 'AC_AUTHORIZATION',
+  AUTHENTICATION = 'AC_AUTHENTICATION',
+}

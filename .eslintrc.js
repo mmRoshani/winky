@@ -1,25 +1,38 @@
-module.exports = {
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    project: 'tsconfig.json',
-    tsconfigRootDir: __dirname,
-    sourceType: 'module',
-  },
-  plugins: ['@typescript-eslint/eslint-plugin'],
-  extends: [
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
-  ],
+const { init } = require('@fullstacksjs/eslint-config/init');
+
+module.exports = init({
   root: true,
-  env: {
-    node: true,
-    jest: true,
+  modules: {
+    auto: true,
+    graphql: false,
+    typescript: { resolverProject: './tsconfig.json', parserProject: './tsconfig.eslint.json' },
   },
-  ignorePatterns: ['.eslintrc.js'],
+  settings: {
+    'import/resolver': {
+      typescript: {
+        project: ['tsconfig.json'],
+      },
+    },
+  },
   rules: {
-    '@typescript-eslint/interface-name-prefix': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-extraneous-class': 'off',
+    'max-params': ['warn', 8],
+    'fp/no-mutating-assign': 'off',
+    'fp/no-let': 'off',
+    '@typescript-eslint/naming-convention': 'off',
   },
-};
+  overrides: [
+    {
+      files: ['./libs/**/*.ts'],
+      rules: {
+        'import/no-cycle': 'off',
+      },
+    },
+    {
+      files: ['./libs/**/*.config.ts'],
+      rules: {
+        '@typescript-eslint/naming-convention': 'off',
+      },
+    },
+  ],
+});
